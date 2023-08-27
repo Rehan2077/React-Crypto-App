@@ -16,7 +16,8 @@ const Header = () => {
       <Button ml={"2"} variant={"unstyled"} color={"white"}>
         <NavLink
           style={({ isActive }) => ({
-            color: isActive ? "#fff" : "#90909b",
+            color: isActive ? "#f0cf18" : "#90909b",
+            fontWeight: isActive ? "700" : "600",
             textDecoration: isActive ? "underline" : "none",
           })}
           to={"/"}
@@ -27,7 +28,8 @@ const Header = () => {
       <Button ml={"2"} variant={"unstyled"} color={"white"}>
         <NavLink
           style={({ isActive }) => ({
-            color: isActive ? "#fff" : "#90909b",
+            color: isActive ? "#f0cf18" : "#90909b",
+            fontWeight: isActive ? "700" : "600",
             textDecoration: isActive ? "underline" : "none",
           })}
           to={"/coins"}
@@ -38,7 +40,8 @@ const Header = () => {
       <Button ml={"2"} variant={"unstyled"} color={"white"}>
         <NavLink
           style={({ isActive }) => ({
-            color: isActive ? "#fff" : "#90909b",
+            color: isActive ? "#f0cf18" : "#90909b",
+            fontWeight: isActive ? "700" : "600",
             textDecoration: isActive ? "underline" : "none",
           })}
           to={"/exchanges"}

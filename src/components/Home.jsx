@@ -19,7 +19,7 @@ const Home = () => {
           repeatType: "reverse",
         }}
       >
-        <Image src={btcSrc} w={"full"} h={"full"} objectFit={"contain"} filter={"grayscale(1)"} />
+        <Image src={btcSrc} w={"full"} h={"full"} objectFit={"contain"} />
       </motion.div>
     </Box>
   );

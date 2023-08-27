@@ -5,7 +5,7 @@ const Loader = () => {
   return (
     <VStack h={"90vh"} justifyContent={"center"}>
         <Box transform={"scale(4)"}>
-          <Spinner />
+          <Spinner color='gold' />
         </Box>
     </VStack>
   )

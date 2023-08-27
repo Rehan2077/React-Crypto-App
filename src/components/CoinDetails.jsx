@@ -107,7 +107,7 @@ const CoinDetails = () => {
       <Alert status="error">
         <AlertIcon />
         There was an error processing your request. Please
-        <a href="/coin">
+        <a href="/coins">
           <Button variant={"link"} colorScheme="blue">
             retry.
           </Button>
@@ -134,7 +134,7 @@ const CoinDetails = () => {
             })}
           </HStack>
 
-          <RadioGroup value={currency} onChange={setCurrecy} p={"8"}>
+          <RadioGroup value={currency} colorScheme='orange' onChange={setCurrecy} p={"8"}>
             <HStack m={"3"} spacing={"8"}>
               <Radio value="inr">INR</Radio>
               <Radio value="usd">USD</Radio>
@@ -172,6 +172,7 @@ const CoinDetails = () => {
             <CustomBar
               low={`${currencySymbol}${coin.market_data.low_24h[currency]}`}
               high={`${currencySymbol}${coin.market_data.high_24h[currency]}`}
+              change={coin.market_data.price_change_percentage_24h}
             />
             <Box p={"2"} w={"full"}>
               <Item title={"Max Supply"} value={coin.market_data.max_supply} />
@@ -199,13 +200,16 @@ const CoinDetails = () => {
   );
 };
 
-const CustomBar = ({ high, low }) => {
+const CustomBar = ({ high, low, change }) => {
   return (
     <VStack w={"full"}>
-      <Progress value={50} colorScheme="telegram" w={"full"} />
+      <Progress value={change>0?(change*100):(change*(-100))} colorScheme={change>0?'green':'red'} w={"full"} />
       <HStack justifyContent={"space-between"} w={"full"}>
         <Badge children={low} colorScheme="red" />
         <Text>24H Range</Text>
+        {
+          console.log(change)
+        }
         <Badge children={high} colorScheme="green" />
       </HStack>
     </VStack>

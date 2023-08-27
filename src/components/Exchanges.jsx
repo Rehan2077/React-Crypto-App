@@ -45,6 +45,7 @@ const Exchanges = () => {
                 rank={data.trust_score_rank}
                 url={data.url}
                 country={data.country}
+                year={data.year_established}
               />
             );
           })}
@@ -54,14 +55,14 @@ const Exchanges = () => {
   );
 };
 
-const ExchangeCard = ({ name, img, rank, url, country }) => {
+const ExchangeCard = ({ name, img, rank, url, country, year }) => {
   return (
     <a href={url} target={"blank"}>
       <VStack
         m={"4"}
         width={"250px"}
         h={"200px"}
-        shadow={"lg"}
+        style={{boxShadow: 'gold 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px'}}
         borderRadius={"10px"}
         p={"4"}
         transition={"all 0.3s"}
@@ -76,6 +77,7 @@ const ExchangeCard = ({ name, img, rank, url, country }) => {
           {rank}. {name}
         </Heading>
         <p>Country: {country}</p>
+        <p>Year establised: {year}</p>
       </VStack>
     </a>
   );
