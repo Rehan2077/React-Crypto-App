@@ -11,24 +11,37 @@ import {
   Heading,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Radio,
   RadioGroup,
   Stack,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import {} from "react-icons/";
 
 const Coins = () => {
   const [coins, setCoins] = useState([]);
+  const [filteredCoin, setFilteredCoin] = useState([])
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState("inr");
+  // const [searchInput,setSearchInput] = useState('')
 
   const changePage = (page) => {
     setPage(page);
     setLoading(true);
   };
+
+  const searchCoin = (e) => {
+    const searchedValue = e.target.value;
+    const filter = coins?.filter((coin) => coin.name.toLowerCase().includes(searchedValue.toLowerCase()))
+
+    console.log(searchedValue);
+    setFilteredCoin(filter);
+  }
 
   const btns = new Array(132).fill(1);
 
@@ -41,6 +54,7 @@ const Coins = () => {
         const { data } = await axios.get(
           `${server}/coins/markets?vs_currency=${currency}&page=${page}`
         );
+        setFilteredCoin(data);
         setCoins(data);
         setLoading(false);
         console.log(data);
@@ -52,7 +66,6 @@ const Coins = () => {
     fetchCoins();
   }, [currency, page]);
 
- 
   if (error) {
     return (
       <Alert status="error">
@@ -66,6 +79,10 @@ const Coins = () => {
       </Alert>
     );
   }
+  const handleSearch = () => {
+    <Link to={`/coins/`} />
+  }
+  // console.log(searchInput);
 
   return (
     <Container maxW={"container.xl"}>
@@ -74,44 +91,61 @@ const Coins = () => {
       ) : (
         <>
           <Stack
-          direction={["column", "row"]}
-          p={"8"}
-          gap={["10px", "50px"]}
-          justifyContent={"space-between"}
-        >
-          <HStack>
-            <RadioGroup
-              value={currency}
-              colorScheme="orange"
-              onChange={setCurrency}
-            >
-              <HStack m={"3"} spacing={"8"}>
-                <Radio value="inr">INR</Radio>
-                <Radio value="usd">USD</Radio>
-                <Radio value="eur">EUR</Radio>
-              </HStack>
-            </RadioGroup>
-          </HStack>
-          {/* <HStack alignItems={"center"} justifyContent={"center"}>
-            <Input
-              w={["300px", "250px"]}
-              onChange={(e) => setSearchedCoin(e.target.value)}
-              type="search"
-              placeholder="Enter to search"
-              borderColor={"gold"}
-              focusBorderColor="gold"
-              css={{ "&:hover": { borderColor: "orange" } }}
-            />
-          </HStack> */}
-        </Stack>
-       
-        <HStack
-          mt={"4"}
-          mb={"4"}
-          flexWrap={"wrap"}
-          justifyContent={"space-around"}
-        >
-         {coins.map((data, index) => {
+            direction={["column", "row"]}
+            p={"8"}
+            gap={["10px", "50px"]}
+            justifyContent={"space-between"}
+          >
+            <HStack>
+              <RadioGroup
+                value={currency}
+                colorScheme="orange"
+                onChange={setCurrency}
+              >
+                <HStack m={"3"} spacing={"8"}>
+                  <Radio value="inr">INR</Radio>
+                  <Radio value="usd">USD</Radio>
+                  <Radio value="eur">EUR</Radio>
+                </HStack>
+              </RadioGroup>
+            </HStack>
+            <HStack alignItems={"center"} justifyContent={"center"}>
+              {/* <Input
+                w={["300px", "250px"]}
+                onChange={(e)=>setSearchInput(e.target.value)}
+                type="search"
+                placeholder="Enter to search"
+                borderColor={"gold"}
+                focusBorderColor="gold"
+                css={{ "&:hover": { borderColor: "orange" } }}
+              /> */}
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type='search'
+                  placeholder="Enter to search"
+                  borderColor={"gold"}
+                  focusBorderColor="gold"
+                  css={{ "&:hover": { borderColor: "orange" } }}
+                  // onChange={(e)=>setSearchInput(e.target.value)}
+                  onChange={searchCoin}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" mr={"1.5"} onClick={handleSearch} bgColor={"gold"} >
+                    Search
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </HStack>
+          </Stack>
+
+          <HStack
+            mt={"4"}
+            mb={"4"}
+            flexWrap={"wrap"}
+            justifyContent={"space-around"}
+          >
+            {filteredCoin.map((data, index) => {
               return (
                 <CoinCard
                   key={data.id}
@@ -127,11 +161,14 @@ const Coins = () => {
             })}
           </HStack>
           <HStack p={"8"} w={"full"} overflowX={"auto"}>
-            {
-              btns.map((item, index) => {
-                return <Button key={index} onClick={() => changePage(index+1)}> {index + 1}</Button>
-              })
-            }
+            {btns.map((item, index) => {
+              return (
+                <Button key={index} onClick={() => changePage(index + 1)}>
+                  {" "}
+                  {index + 1}
+                </Button>
+              );
+            })}
           </HStack>
         </>
       )}
