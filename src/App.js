@@ -5,6 +5,7 @@ import Exchanges from "./components/Exchanges"
 import CoinDetails from "./components/CoinDetails"
 import Coins from "./components/Coins"
 import Footer from "./components/Footer"
+import SearchedCoinDetails from "./components/SearchedCoinDetails"
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/coins" element={<Coins/>} />
         <Route path="/coins/:id" element={<CoinDetails/>} />
+        <Route path="/coins/search/:id" element={<SearchedCoinDetails />} />
         <Route path="/exchanges" element={<Exchanges/>} />
         <Route path="/*" element={<h1>Error 404 : Page Not Found</h1>} />
       </Routes>

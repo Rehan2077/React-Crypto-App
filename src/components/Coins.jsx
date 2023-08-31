@@ -24,6 +24,7 @@ import {} from "react-icons/";
 const Coins = () => {
   const [coins, setCoins] = useState([]);
   const [filteredCoin, setFilteredCoin] = useState([])
+  const [inputSearch, setInputSearch] = useState('')
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
@@ -38,8 +39,9 @@ const Coins = () => {
   const searchCoin = (e) => {
     const searchedValue = e.target.value;
     const filter = coins?.filter((coin) => coin.name.toLowerCase().includes(searchedValue.toLowerCase()))
-
-    console.log(searchedValue);
+    
+    setInputSearch(searchedValue);
+    // console.log("Input" ,searchedValue);
     setFilteredCoin(filter);
   }
 
@@ -123,17 +125,16 @@ const Coins = () => {
                 <Input
                   pr="4.5rem"
                   type='search'
-                  placeholder="Enter to search"
+                  placeholder="Enter coin name"
                   borderColor={"gold"}
                   focusBorderColor="gold"
                   css={{ "&:hover": { borderColor: "orange" } }}
-                  // onChange={(e)=>setSearchInput(e.target.value)}
                   onChange={searchCoin}
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" mr={"1.5"} onClick={handleSearch} bgColor={"gold"} >
+                  <Link to={`/coins/search/${inputSearch.toLowerCase()}`}><Button h="1.75rem" size="sm" mr={"1.5"} onClick={handleSearch} bgColor={"gold"} >
                     Search
-                  </Button>
+                  </Button></Link>
                 </InputRightElement>
               </InputGroup>
             </HStack>
